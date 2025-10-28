@@ -1,0 +1,55 @@
+---
+name: "🛠️ Gerrit EnvironmentVariables Checkpoint"
+description: |
+  This GitHub Action checkpoints Gerrit environment variables for downstream workflows.
+
+inputs:
+  TUI_LINE:
+    description: "Delimiter line for TUI output"
+    required: false
+    default: "*******************************************************************"
+    type: string
+  ARTIFACT_NAME:
+    description: "Name of the artifact to restore"
+    required: false
+    default: "vpp-gerrit-vars"
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkpoint Gerrit Environment Variables
+      id: gerrit-env-vars-checkpoints
+      shell: bash
+      run: |
+        set -euo pipefail
+        mkdir -p vpp-gerrit-vars
+        echo "$GERRIT_BRANCH" > vpp-gerrit-vars/gerrit-branch
+        echo "$GERRIT_CHANGE_ID" > vpp-gerrit-vars/gerrit-change-id
+        echo "$GERRIT_CHANGE_NUMBER" > vpp-gerrit-vars/gerrit-change-number
+        echo "$GERRIT_CHANGE_URL" > vpp-gerrit-vars/gerrit-change-url
+        echo "$GERRIT_EVENT_TYPE" > vpp-gerrit-vars/gerrit-event-type
+        echo "$GERRIT_PATCHSET_NUMBER" > vpp-gerrit-vars/gerrit-patchset-number
+        echo "$GERRIT_PATCHSET_REVISION" > vpp-gerrit-vars/gerrit-patchset-revision
+        echo "$GERRIT_PROJECT" > vpp-gerrit-vars/gerrit-project
+        echo "$GERRIT_REFSPEC" > vpp-gerrit-vars/gerrit-refspec
+
+        echo "${{ inputs.TUI_LINE }}"
+        echo "Successfully checkpointed Gerrit environment variables:"
+        echo "GERRIT_BRANCH: $(cat vpp-gerrit-vars/gerrit-branch)"
+        echo "GERRIT_CHANGE_ID: $(cat vpp-gerrit-vars/gerrit-change-id)"
+        echo "GERRIT_CHANGE_NUMBER: $(cat vpp-gerrit-vars/gerrit-change-number)"
+        echo "GERRIT_CHANGE_URL: $(cat vpp-gerrit-vars/gerrit-change-url)"
+        echo "GERRIT_EVENT_TYPE: $(cat vpp-gerrit-vars/gerrit-event-type)"
+        echo "GERRIT_PATCHSET_NUMBER: $(cat vpp-gerrit-vars/gerrit-patchset-number)"
+        echo "GERRIT_PATCHSET_REVISION: $(cat vpp-gerrit-vars/gerrit-patchset-revision)"
+        echo "GERRIT_PROJECT: $(cat vpp-gerrit-vars/gerrit-project)"
+        echo "GERRIT_REFSPEC: $(cat vpp-gerrit-vars/gerrit-refspec)"
+        echo "${{ inputs.TUI_LINE }}"
+
+    - name: Upload Workflow Outputs
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.ARTIFACT_NAME }}
+        path: vpp-gerrit-vars/
+        if-no-files-found: error
