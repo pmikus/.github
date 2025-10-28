@@ -75,15 +75,15 @@ runs:
       run: |
         set -euo pipefail
 
-        GERRIT_BRANCH_FILE="vpp-gerrit-vars/gerrit-branch"
-        GERRIT_CHANGE_ID_FILE="vpp-gerrit-vars/gerrit-change-id"
-        GERRIT_CHANGE_NUMBER_FILE="vpp-gerrit-vars/gerrit-change-number"
-        GERRIT_CHANGE_URL_FILE="vpp-gerrit-vars/gerrit-change-url"
-        GERRIT_EVENT_TYPE_FILE="vpp-gerrit-vars/gerrit-event-type"
-        GERRIT_PATCHSET_NUMBER_FILE="vpp-gerrit-vars/gerrit-patchset-number"
-        GERRIT_PATCHSET_REVISION_FILE="vpp-gerrit-vars/gerrit-patchset-revision"
-        GERRIT_PROJECT_FILE="vpp-gerrit-vars/gerrit-project"
-        GERRIT_REFSPEC_FILE="vpp-gerrit-vars/gerrit-refspec"
+        GERRIT_BRANCH_FILE="gerrit-branch"
+        GERRIT_CHANGE_ID_FILE="gerrit-change-id"
+        GERRIT_CHANGE_NUMBER_FILE="gerrit-change-number"
+        GERRIT_CHANGE_URL_FILE="gerrit-change-url"
+        GERRIT_EVENT_TYPE_FILE="gerrit-event-type"
+        GERRIT_PATCHSET_NUMBER_FILE="gerrit-patchset-number"
+        GERRIT_PATCHSET_REVISION_FILE="gerrit-patchset-revision"
+        GERRIT_PROJECT_FILE="gerrit-project"
+        GERRIT_REFSPEC_FILE="gerrit-refspec"
 
         # Validate all required files exist
         REQUIRED_FILES=(
@@ -128,15 +128,18 @@ runs:
         echo "GERRIT_PROJECT=$GERRIT_PROJECT_VALUE" >> $GITHUB_ENV
         echo "GERRIT_REFSPEC=$GERRIT_REFSPEC_VALUE" >> $GITHUB_ENV
 
+    - name: Display Restored Gerrit Environment Variables
+      shell: bash
+      run: |
         echo "${{ inputs.TUI_LINE }}"
         echo "Successfully restored gerrit environment variables:"
-        echo "  GERRIT_BRANCH=$GERRIT_BRANCH"
-        echo "  GERRIT_CHANGE_ID=$GERRIT_CHANGE_ID"
-        echo "  GERRIT_CHANGE_NUMBER=$GERRIT_CHANGE_NUMBER"
-        echo "  GERRIT_CHANGE_URL=$GERRIT_CHANGE_URL"
-        echo "  GERRIT_EVENT_TYPE=$GERRIT_EVENT_TYPE"
-        echo "  GERRIT_PATCHSET_NUMBER=$GERRIT_PATCHSET_NUMBER"
-        echo "  GERRIT_PATCHSET_REVISION=$GERRIT_PATCHSET_REVISION"
-        echo "  GERRIT_PROJECT=$GERRIT_PROJECT"
-        echo "  GERRIT_REFSPEC=$GERRIT_REFSPEC"
+        echo "  env.GERRIT_BRANCH:             ${{ env.GERRIT_BRANCH }}"
+        echo "  env.GERRIT_CHANGE_ID:          ${{ env.GERRIT_CHANGE_ID }}"
+        echo "  env.GERRIT_CHANGE_NUMBER:      ${{ env.GERRIT_CHANGE_NUMBER }}"
+        echo "  env.GERRIT_CHANGE_URL:         ${{ env.GERRIT_CHANGE_URL }}"
+        echo "  env.GERRIT_EVENT_TYPE:         ${{ env.GERRIT_EVENT_TYPE }}"
+        echo "  env.GERRIT_PATCHSET_NUMBER:    ${{ env.GERRIT_PATCHSET_NUMBER }}"
+        echo "  env.GERRIT_PATCHSET_REVISION:  ${{ env.GERRIT_PATCHSET_REVISION }}"
+        echo "  env.GERRIT_PROJECT:            ${{ env.GERRIT_PROJECT }}"
+        echo "  env.GERRIT_REFSPEC:            ${{ env.GERRIT_REFSPEC }}"
         echo "${{ inputs.TUI_LINE }}"
