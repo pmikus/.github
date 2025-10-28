@@ -12,6 +12,7 @@ The action downloads a `vpp-gerrit-vars` artifact from a workflow run and extrac
 - name: Restore Gerrit Environment Variables
   uses: fdio/.github/.github/actions/gerrit-env-vars-restore@main
   with:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     TUI_LINE: "*******************************************************************"
 ```
 
@@ -19,6 +20,7 @@ The action downloads a `vpp-gerrit-vars` artifact from a workflow run and extrac
 
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
+| `GITHUB_TOKEN` | GitHub token for API access to download artifacts | Yes | - |
 | `TUI_LINE` | Delimiter line for TUI output formatting | No | `"*******************************************************************"` |
 
 ## Environment Variables Restored
@@ -41,7 +43,7 @@ This action requires:
 
 1. A previous job that created and uploaded a `vpp-gerrit-vars` artifact
 2. The workflow must be triggered by a `workflow_run` event
-3. Access to `secrets.GITHUB_TOKEN` for artifact download
+3. Access to `secrets.GITHUB_TOKEN` which must be passed as the `GITHUB_TOKEN` input
 
 ## Workflow Context
 
@@ -66,6 +68,8 @@ jobs:
 
       - name: Restore Gerrit Environment Variables
         uses: ./.github/actions/gerrit-env-vars-restore
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Use Gerrit Variables
         run: |
@@ -104,9 +108,10 @@ Each file contains the corresponding environment variable value as plain text.
 
 ## Security Considerations
 
-- Uses `secrets.GITHUB_TOKEN` for GitHub API access
+- Requires `GITHUB_TOKEN` to be explicitly passed as input for GitHub API access
 - Only accesses artifacts from the same repository
 - Sanitizes input by removing newlines and carriage returns from restored values
+- Token is only used for artifact download operations within the same repository
 
 ## Troubleshooting
 
@@ -114,7 +119,8 @@ If the action fails:
 
 1. Check that the triggering workflow successfully created the `vpp-gerrit-vars` artifact
 2. Verify the workflow is triggered by a `workflow_run` event
-3. Ensure `secrets.GITHUB_TOKEN` has appropriate permissions
-4. Check the action logs for detailed artifact information
+3. Ensure `GITHUB_TOKEN` input is provided with `${{ secrets.GITHUB_TOKEN }}`
+4. Verify the token has appropriate permissions for artifact access
+5. Check the action logs for detailed artifact information
 
 The action provides extensive logging to help diagnose issues with artifact discovery and download.

@@ -9,6 +9,9 @@ inputs:
     required: false
     default: "*******************************************************************"
     type: string
+  GITHUB_TOKEN:
+    description: "GitHub token for API access"
+    required: true
 
 runs:
   using: "composite"
@@ -27,7 +30,7 @@ runs:
         echo "Workflow run conclusion: ${{ github.event.workflow_run.conclusion }}"
 
         # Get all artifacts info for debugging
-        ARTIFACTS_RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        ARTIFACTS_RESPONSE=$(curl -s -H "Authorization: token ${{ inputs.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           "$ARTIFACTS_URL")
 
@@ -57,7 +60,7 @@ runs:
 
         # Download the artifact
         DOWNLOAD_URL="https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$ARTIFACT_ID/zip"
-        curl -s -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+        curl -s -L -H "Authorization: token ${{ inputs.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           "$DOWNLOAD_URL" -o artifact.zip
 
