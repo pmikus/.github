@@ -7,12 +7,31 @@ action/workflow running on a self-hosted runner.
 
 Displays system and Nomad executor attributes for debugging and monitoring purposes.
 
+### Basic Usage
+
 <!-- markdownlint-disable MD013 -->
 ```yaml
 - name: "Show Nomad Attributes"
   uses: fdio/.github/.github/actions/show-nomad-attributes@main
 ```
 <!-- markdownlint-enable MD013 -->
+
+### With Custom Delimiter
+
+<!-- markdownlint-disable MD013 -->
+```yaml
+- name: "Show Nomad Attributes"
+  uses: fdio/.github/.github/actions/show-nomad-attributes@main
+  with:
+    TUI_LINE: "=========================================="
+```
+<!-- markdownlint-enable MD013 -->
+
+## Inputs
+
+| Input | Description | Required | Default |
+|-------|-------------|----------|---------|
+| `TUI_LINE` | Delimiter line for TUI output | No | `*******************************************************************` |
 
 ## Output
 

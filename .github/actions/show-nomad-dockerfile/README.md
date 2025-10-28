@@ -6,12 +6,33 @@ Action to display the FD.io Nomad executor Dockerfile on the self-hosted runner.
 
 Displays the Dockerfile used to build the executor container for debugging and monitoring purposes.
 
+### Basic Usage
+
 <!-- markdownlint-disable MD013 -->
 ```yaml
 - name: "Show Nomad Dockerfile"
   uses: fdio/.github/.github/actions/show-nomad-dockerfile@main
 ```
 <!-- markdownlint-enable MD013 -->
+
+### With Custom Delimiters
+
+<!-- markdownlint-disable MD013 -->
+```yaml
+- name: "Show Nomad Dockerfile"
+  uses: fdio/.github/.github/actions/show-nomad-dockerfile@main
+  with:
+    TUI_LINE: "=========================================="
+    TUI_FILE_LINE: "--- FILE CONTENT ---"
+```
+<!-- markdownlint-enable MD013 -->
+
+## Inputs
+
+| Input | Description | Required | Default |
+|-------|-------------|----------|---------|
+| `TUI_LINE` | Delimiter line for TUI output | No | `*******************************************************************` |
+| `TUI_FILE_LINE` | Delimiter line for file content | No | `----- %< -----` |
 
 ## Output
 
