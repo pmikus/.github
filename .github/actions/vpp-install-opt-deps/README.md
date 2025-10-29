@@ -10,7 +10,7 @@ The action executes the VPP makefile target `install-opt-deps` in unattended mod
 
 ```yaml
 - name: Install VPP Optional Dependencies
-  uses: ./.github/actions/vpp-install-opt-deps
+  uses: fdio/.github/.github/actions/vpp-install-opt-deps
   with:
     TUI_LINE: "*******************************************************************"
 ```
@@ -76,10 +76,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install VPP External Dependencies
-        uses: ./.github/actions/vpp-install-ext-deps
+        uses: fdio/.github/.github/actions/vpp-install-ext-deps
 
       - name: Install VPP Optional Dependencies
-        uses: ./.github/actions/vpp-install-opt-deps
+        uses: fdio/.github/.github/actions/vpp-install-opt-deps
 
       - name: Build VPP
         run: make build
@@ -89,7 +89,7 @@ jobs:
 
 ```yaml
 - name: Install Optional Dependencies
-  uses: ./.github/actions/vpp-install-opt-deps
+  uses: fdio/.github/.github/actions/vpp-install-opt-deps
   with:
     TUI_LINE: "=== Optional Dependencies Setup ==="
 ```
@@ -108,10 +108,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install External Dependencies
-        uses: ./.github/actions/vpp-install-ext-deps
+        uses: fdio/.github/.github/actions/vpp-install-ext-deps
 
       - name: Install Optional Dependencies
-        uses: ./.github/actions/vpp-install-opt-deps
+        uses: fdio/.github/.github/actions/vpp-install-opt-deps
         with:
           TUI_LINE: "--- Installing Optional VPP Dependencies ---"
 
@@ -126,10 +126,6 @@ jobs:
         run: make test
 ```
 
-## Error Handling
-
-The action implements robust error handling:
-
 ### Strict Mode
 ```bash
 set -euo pipefail
@@ -137,14 +133,6 @@ set -euo pipefail
 - **`-e`**: Exit immediately if any command fails
 - **`-u`**: Treat unset variables as errors
 - **`-o pipefail`**: Fail if any command in a pipeline fails
-
-### Failure Scenarios
-The action will fail if:
-- VPP makefile is not present or invalid
-- `install-opt-deps` target doesn't exist
-- Network connectivity issues prevent package downloads
-- Insufficient permissions for package installation
-- System incompatibility with optional dependencies
 
 ## Integration with VPP Build System
 
@@ -155,70 +143,6 @@ This action is part of a comprehensive VPP build setup:
 3. **Optional Dependencies**: Install optional dependencies (this action)
 4. **Build Process**: Compile VPP with enhanced capabilities
 5. **Testing**: Run tests with additional tooling available
-
-## Performance Considerations
-
-- **Installation Time**: Optional dependencies may add significant time to initial setup
-- **Caching**: Dependencies are installed to the system and persist across workflow runs on self-hosted runners
-- **Network Usage**: First-time installation requires downloading packages
-- **Disk Space**: Optional dependencies consume additional disk space
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Makefile Not Found**
-   ```
-   make: *** No rule to make target 'install-opt-deps'
-   ```
-   - Ensure VPP source is properly checked out
-   - Verify you're in the correct directory
-
-2. **Permission Denied**
-   ```
-   Permission denied during package installation
-   ```
-   - Ensure the runner has sudo privileges
-   - Check system package manager permissions
-
-3. **Network Connectivity**
-   ```
-   Failed to download packages
-   ```
-   - Verify internet connectivity
-   - Check firewall rules for package repositories
-
-4. **Dependency Conflicts**
-   ```
-   Package conflicts or version mismatches
-   ```
-   - Update system packages: `sudo apt update && sudo apt upgrade`
-   - Clear package cache if needed
-
-### Debug Steps
-
-1. **Check VPP Makefile**:
-   ```bash
-   make help | grep opt-deps
-   ```
-
-2. **Verify Target Exists**:
-   ```bash
-   grep -n "install-opt-deps" Makefile
-   ```
-
-3. **Manual Installation**:
-   ```bash
-   make UNATTENDED=yes install-opt-deps
-   ```
-
-## Relationship to Other Actions
-
-This action works in conjunction with related VPP actions:
-
-- **`vpp-install-ext-deps`**: Installs required external dependencies (should run before this action)
-- **`gerrit-env-vars-checkpoint`**: May be used to checkpoint build environment state
-- **`gerrit-env-vars-restore`**: May be used to restore build environment state
 
 ## Security Considerations
 
