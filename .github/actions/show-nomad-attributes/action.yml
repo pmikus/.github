@@ -29,7 +29,7 @@ runs:
         if [ -f "$NOMAD_CLIENT_FILE" ]; then
             NOMAD_CLIENT_NAME=$(cat "$NOMAD_CLIENT_FILE")
         else
-            NOMAD_CLIENT_NAME="Nomad Client Name Unknown"
+            NOMAD_CLIENT_NAME="Unknown"
         fi
         echo "${{ inputs.TUI_LINE }}"
         echo "Executor Runtime Attributes:"
