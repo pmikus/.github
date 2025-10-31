@@ -10,7 +10,7 @@ An example workflow step using this action:
 <!-- markdownlint-disable MD013 -->
 ```yaml
 - name: AWS S3 Publish Logs
-  uses: fdio/.github/.github/actions/aws_s3_publish_logs@master
+  uses: fdio/.github/.github/actions/aws-s3-publish-logs@master
 ```
 <!-- markdownlint-enable MD013 -->
 
