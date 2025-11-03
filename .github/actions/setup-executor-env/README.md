@@ -10,7 +10,7 @@ Sets the OS details used for Git operations inside other actions/workflows.
 <!-- markdownlint-disable MD013 -->
 ```yaml
 - name: "Setup Environment"
-  uses: fdio/csit/.github/actions/setup_executor_env@master
+  uses: fdio/csit/.github/actions/setup-executor-env@master
 ```
 <!-- markdownlint-enable MD013 -->
 

@@ -20,12 +20,12 @@ An example workflow step using this action:
 
 | Variable Name         | Description                                                   |
 | --------------------- | ------------------------------------------------------------- |
-| AWS_ACCESS_KEY_ID     | Unique, public identifier for an AWS IAM user.                |
-| AWS_SECRET_ACCESS_KEY | Long-term security credential for AWS account or an IAM user. |
-| AWS_REGION            | AWS region for S3 bucket.                                     |
-| S3_BUCKET             | Name of the Amazon S3 bucket.                                 |
-| S3_PATH               | Path within Amazon AWS S3 bucket.                             |
-| ARCHIVES_PATH         | Source directory with logs artifact to archive.               |
+| aws_access_key_id     | Unique, public identifier for an AWS IAM user.                |
+| aws_secret_access_key | Long-term security credential for AWS account or an IAM user. |
+| aws_region            | AWS region for S3 bucket.                                     |
+| s3_bucket             | Name of the Amazon S3 bucket.                                 |
+| s3_path               | Path within Amazon AWS S3 bucket.                             |
+| archives_path         | Source directory with logs artifact to archive.               |
 
 <!-- markdownlint-enable MD013 -->
 

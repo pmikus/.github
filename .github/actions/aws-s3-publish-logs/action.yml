@@ -4,29 +4,29 @@ description: |
   This GitHub Action uploads logs to AWS S3.
 
 inputs:
-  AWS_ACCESS_KEY_ID:
+  aws_access_key_id:
     description: "Unique, public identifier for an AWS IAM user."
     required: true
     type: string
-  AWS_SECRET_ACCESS_KEY:
+  aws_secret_access_key:
     description: "Long-term security credential for AWS account or an IAM user."
     required: true
     type: string
-  AWS_REGION:
+  aws_region:
     description: "AWS region for S3 bucket."
     required: true
     type: string
-  S3_BUCKET:
+  s3_bucket:
     description: "Name of the Amazon S3 bucket."
     required: true
     default: "fdio-logs-s3-cloudfront-index"
     type: string
-  S3_PATH:
+  s3_path:
     description: "Path within Amazon AWS S3 bucket."
     required: false
     default: "vex-yul-rot-jenkins-1/${{ github.job }}/${{ github.run_id }}"
     type: string
-  ARCHIVES_PATH:
+  archives_path:
     description: "Source directory with logs artifact to archive."
     required: false
     default: "${{ github.workspace }}/archives"
@@ -83,9 +83,9 @@ runs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v5.0.0
       with:
-        aws-access-key-id: ${{ inputs.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ inputs.AWS_REGION }}
+        aws-access-key-id: ${{ inputs.aws_access_key_id }}
+        aws-secret-access-key: ${{ inputs.aws_secret_access_key }}
+        aws-region: ${{ inputs.aws_region }}
 
     - name: Upload archives directory content to S3
       shell: bash
@@ -118,7 +118,7 @@ runs:
 
         export -f get_content_type
 
-        pushd ${{ inputs.ARCHIVES_PATH }}
+        pushd ${{ inputs.archives_path }}
 
         # Traverse and upload
         find . -type f | while read -r file; do
@@ -128,7 +128,7 @@ runs:
 
           content_type=$(get_content_type "${file}")
 
-          S3_ARN="s3://${{ inputs.S3_BUCKET }}/${{ inputs.S3_PATH }}/${rel_path}.gz"
+          S3_ARN="s3://${{ inputs.s3_bucket }}/${{ inputs.s3_path }}/${rel_path}.gz"
 
           echo "Uploading ${rel_path}.gz -> ${S3_ARN} (Content-Type: ${content_type}, gzip)"
           aws s3 cp "${tmp_file}" "${S3_ARN}" --content-type "${content_type}" --content-encoding "gzip"
