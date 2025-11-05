@@ -4,7 +4,7 @@ A GitHub Action that checkpoints Gerrit environment variables for use in downstr
 
 ## 📋 Description
 
-This action captures and persists Gerrit environment variables by writing them to individual files in a `vpp-gerrit-vars/` directory. This is particularly useful in CI/CD pipelines where Gerrit integration is required and variables need to be preserved across different workflow steps or jobs.
+This action captures and persists Gerrit environment variables by writing them to individual files in a `fdio-gerrit-vars/` directory. This is particularly useful in CI/CD pipelines where Gerrit integration is required and variables need to be preserved across different workflow steps or jobs.
 
 ## 🔧 Features
 
@@ -23,7 +23,7 @@ This action captures and persists Gerrit environment variables by writing them t
 
 ## 📤 Outputs
 
-This action creates the following files in the `vpp-gerrit-vars/` directory and automatically uploads them as a workflow artifact named `vpp-gerrit-vars`:
+This action creates the following files in the `fdio-gerrit-vars/` directory and automatically uploads them as a workflow artifact named `fdio-gerrit-vars`:
 
 | File | Content | Description |
 |------|---------|-------------|
@@ -77,15 +77,15 @@ jobs:
 
       - name: Use checkpointed variables
         run: |
-          echo "Working with change: $(cat vpp-gerrit-vars/gerrit-change-number)"
-          echo "Branch: $(cat vpp-gerrit-vars/gerrit-branch)"
-          echo "Project: $(cat vpp-gerrit-vars/gerrit-project)"
+          echo "Working with change: $(cat fdio-gerrit-vars/gerrit-change-number)"
+          echo "Branch: $(cat fdio-gerrit-vars/gerrit-branch)"
+          echo "Project: $(cat fdio-gerrit-vars/gerrit-project)"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: gerrit-variables
-          path: vpp-gerrit-vars/
+          path: fdio-gerrit-vars/
 ```
 
 ## 📋 Prerequisites
@@ -106,7 +106,7 @@ These are typically set by Gerrit trigger plugins or CI/CD systems that integrat
 
 ## � Artifact Upload
 
-The action automatically uploads the `vpp-gerrit-vars/` directory as a workflow artifact with the name `vpp-gerrit-vars`. This artifact can be:
+The action automatically uploads the `fdio-gerrit-vars/` directory as a workflow artifact with the name `fdio-gerrit-vars`. This artifact can be:
 
 - Downloaded from the GitHub Actions UI
 - Accessed by subsequent jobs in the same workflow
@@ -139,7 +139,7 @@ GERRIT_REFSPEC: refs/changes/45/12345/2
 After running this action, the following directory structure will be created:
 
 ```
-vpp-gerrit-vars/
+fdio-gerrit-vars/
 ├── gerrit-branch
 ├── gerrit-change-id
 ├── gerrit-change-number
@@ -170,10 +170,9 @@ The action uses `set -euo pipefail` for strict error handling:
 
 ## 📝 Notes
 
-- The action creates the `vpp-gerrit-vars/` directory if it doesn't exist
+- The action creates the `fdio-gerrit-vars/` directory if it doesn't exist
 - Each variable is stored in a separate file for easy individual access
-- The directory is automatically uploaded as a workflow artifact named `vpp-gerrit-vars`
+- The directory is automatically uploaded as a workflow artifact named `fdio-gerrit-vars`
 - The action is designed for self-hosted runners with Gerrit integration
 - All files are created in the current working directory
 - The artifact upload will fail if no files are created, ensuring checkpoint integrity
-

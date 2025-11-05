@@ -37,16 +37,16 @@ runs:
         echo "=== All artifacts in this workflow run ==="
         echo "$ARTIFACTS_RESPONSE" | jq -r '.artifacts[] | "\(.name) (ID: \(.id), expired: \(.expired))"' || echo "No artifacts or jq error"
 
-        # Find the vpp-gerrit-vars artifact
-        ARTIFACT_ID=$(echo "$ARTIFACTS_RESPONSE" | jq -r '.artifacts[] | select(.name=="vpp-gerrit-vars") | .id')
+        # Find the fdio-gerrit-vars artifact
+        ARTIFACT_ID=$(echo "$ARTIFACTS_RESPONSE" | jq -r '.artifacts[] | select(.name=="fdio-gerrit-vars") | .id')
 
         if [ "$ARTIFACT_ID" = "null" ] || [ -z "$ARTIFACT_ID" ]; then
-          echo "Error: vpp-gerrit-vars artifact not found"
+          echo "Error: fdio-gerrit-vars artifact not found"
           echo "Available artifacts:"
           echo "$ARTIFACTS_RESPONSE" | jq -r '.artifacts[].name' || echo "Failed to parse artifacts"
 
-          # Try to find any vpp-gerrit-vars-* artifacts as fallback
-          MATRIX_ARTIFACT_ID=$(echo "$ARTIFACTS_RESPONSE" | jq -r '.artifacts[] | select(.name | startswith("vpp-gerrit-vars-")) | .id' | head -1)
+          # Try to find any fdio-gerrit-vars-* artifacts as fallback
+          MATRIX_ARTIFACT_ID=$(echo "$ARTIFACTS_RESPONSE" | jq -r '.artifacts[] | select(.name | startswith("fdio-gerrit-vars-")) | .id' | head -1)
           if [ -n "$MATRIX_ARTIFACT_ID" ] && [ "$MATRIX_ARTIFACT_ID" != "null" ]; then
             echo "Found matrix artifact instead, using: $MATRIX_ARTIFACT_ID"
             ARTIFACT_ID="$MATRIX_ARTIFACT_ID"

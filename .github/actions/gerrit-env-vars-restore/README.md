@@ -4,7 +4,7 @@ This GitHub Action restores Gerrit environment variables from a checkpoint artif
 
 ## Overview
 
-The action downloads a `vpp-gerrit-vars` artifact from a workflow run and extracts the stored Gerrit environment variables, making them available for subsequent workflow steps.
+The action downloads a `fdio-gerrit-vars` artifact from a workflow run and extracts the stored Gerrit environment variables, making them available for subsequent workflow steps.
 
 ## Usage
 
@@ -41,7 +41,7 @@ This action restores the following Gerrit-related environment variables:
 
 This action requires:
 
-1. A previous job that created and uploaded a `vpp-gerrit-vars` artifact
+1. A previous job that created and uploaded a `fdio-gerrit-vars` artifact
 2. The workflow must be triggered by a `workflow_run` event
 3. Access to `secrets.GITHUB_TOKEN` which must be passed as the `GITHUB_TOKEN` input
 
@@ -83,16 +83,16 @@ jobs:
 The action includes comprehensive error handling:
 
 - Validates artifact existence before download
-- Falls back to matrix artifacts (e.g., `vpp-gerrit-vars-*`) if the main artifact is not found
+- Falls back to matrix artifacts (e.g., `fdio-gerrit-vars-*`) if the main artifact is not found
 - Provides detailed debugging information about available artifacts
 - Exits with error code if required files are not found
 
 ## Artifact Structure
 
-The expected artifact (`vpp-gerrit-vars`) should contain the following files:
+The expected artifact (`fdio-gerrit-vars`) should contain the following files:
 
 ```
-vpp-gerrit-vars/
+fdio-gerrit-vars/
 ├── gerrit-branch
 ├── gerrit-change-id
 ├── gerrit-change-number
@@ -117,7 +117,7 @@ Each file contains the corresponding environment variable value as plain text.
 
 If the action fails:
 
-1. Check that the triggering workflow successfully created the `vpp-gerrit-vars` artifact
+1. Check that the triggering workflow successfully created the `fdio-gerrit-vars` artifact
 2. Verify the workflow is triggered by a `workflow_run` event
 3. Ensure `GITHUB_TOKEN` input is provided with `${{ secrets.GITHUB_TOKEN }}`
 4. Verify the token has appropriate permissions for artifact access

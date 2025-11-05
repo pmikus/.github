@@ -23,13 +23,20 @@ runs:
       run: |
         . /etc/os-release
         OS_ARCH=$(uname -m)
+        NOMAD_CLIENT_FILE="/scratch/nomad/nomad-client"
+        if [ -f "$NOMAD_CLIENT_FILE" ]; then
+            NOMAD_CLIENT_NAME=$(cat "$NOMAD_CLIENT_FILE")
+        else
+            NOMAD_CLIENT_NAME="Unknown"
+        fi
 
-        echo "OS: ${ID:-unknown}-${VERSION_ID:-unknown}"
+        echo "OS: ${ID:-unknown}-${VERSION_ID:-unknown} (${NAME:-unknown} ${VERSION:-unknown})"
         echo "Arch: ${OS_ARCH}"
         echo "GitHub Runner: ${RUNNER_NAME:-Unknown}"
         echo "GitHub Workflow: ${GITHUB_WORKFLOW:-Unknown}"
         echo "GitHub Run ID: ${GITHUB_RUN_ID:-Unknown}"
-        echo "Runner Hostname: $(hostname)"
+        echo "Runner Hostname (Container ID): $(hostname)"
+        echo "Nomad Client Name: ${NOMAD_CLIENT_NAME}"
 
         # Set GitHub Outputs
         echo "OS_ID=$ID" >> "$GITHUB_ENV"

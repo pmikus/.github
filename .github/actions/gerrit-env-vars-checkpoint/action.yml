@@ -1,5 +1,5 @@
 ---
-name: "🛠️ Gerrit EnvironmentVariables Checkpoint"
+name: "🛠️ Gerrit Environment Variables Checkpoint"
 description: |
   This GitHub Action checkpoints Gerrit environment variables for downstream workflows.
 
@@ -12,7 +12,7 @@ inputs:
   ARTIFACT_NAME:
     description: "Name of the artifact to restore"
     required: false
-    default: "vpp-gerrit-vars"
+    default: "fdio-gerrit-vars"
     type: string
 
 runs:
@@ -23,33 +23,33 @@ runs:
       shell: bash
       run: |
         set -euo pipefail
-        mkdir -p vpp-gerrit-vars
-        echo "$GERRIT_BRANCH" > vpp-gerrit-vars/gerrit-branch
-        echo "$GERRIT_CHANGE_ID" > vpp-gerrit-vars/gerrit-change-id
-        echo "$GERRIT_CHANGE_NUMBER" > vpp-gerrit-vars/gerrit-change-number
-        echo "$GERRIT_CHANGE_URL" > vpp-gerrit-vars/gerrit-change-url
-        echo "$GERRIT_EVENT_TYPE" > vpp-gerrit-vars/gerrit-event-type
-        echo "$GERRIT_PATCHSET_NUMBER" > vpp-gerrit-vars/gerrit-patchset-number
-        echo "$GERRIT_PATCHSET_REVISION" > vpp-gerrit-vars/gerrit-patchset-revision
-        echo "$GERRIT_PROJECT" > vpp-gerrit-vars/gerrit-project
-        echo "$GERRIT_REFSPEC" > vpp-gerrit-vars/gerrit-refspec
+        mkdir -p fdio-gerrit-vars
+        echo "$GERRIT_BRANCH" > fdio-gerrit-vars/gerrit-branch
+        echo "$GERRIT_CHANGE_ID" > fdio-gerrit-vars/gerrit-change-id
+        echo "$GERRIT_CHANGE_NUMBER" > fdio-gerrit-vars/gerrit-change-number
+        echo "$GERRIT_CHANGE_URL" > fdio-gerrit-vars/gerrit-change-url
+        echo "$GERRIT_EVENT_TYPE" > fdio-gerrit-vars/gerrit-event-type
+        echo "$GERRIT_PATCHSET_NUMBER" > fdio-gerrit-vars/gerrit-patchset-number
+        echo "$GERRIT_PATCHSET_REVISION" > fdio-gerrit-vars/gerrit-patchset-revision
+        echo "$GERRIT_PROJECT" > fdio-gerrit-vars/gerrit-project
+        echo "$GERRIT_REFSPEC" > fdio-gerrit-vars/gerrit-refspec
 
         echo "${{ inputs.TUI_LINE }}"
         echo "Successfully checkpointed Gerrit environment variables:"
-        echo "GERRIT_BRANCH: $(cat vpp-gerrit-vars/gerrit-branch)"
-        echo "GERRIT_CHANGE_ID: $(cat vpp-gerrit-vars/gerrit-change-id)"
-        echo "GERRIT_CHANGE_NUMBER: $(cat vpp-gerrit-vars/gerrit-change-number)"
-        echo "GERRIT_CHANGE_URL: $(cat vpp-gerrit-vars/gerrit-change-url)"
-        echo "GERRIT_EVENT_TYPE: $(cat vpp-gerrit-vars/gerrit-event-type)"
-        echo "GERRIT_PATCHSET_NUMBER: $(cat vpp-gerrit-vars/gerrit-patchset-number)"
-        echo "GERRIT_PATCHSET_REVISION: $(cat vpp-gerrit-vars/gerrit-patchset-revision)"
-        echo "GERRIT_PROJECT: $(cat vpp-gerrit-vars/gerrit-project)"
-        echo "GERRIT_REFSPEC: $(cat vpp-gerrit-vars/gerrit-refspec)"
+        echo "GERRIT_BRANCH: $(cat fdio-gerrit-vars/gerrit-branch)"
+        echo "GERRIT_CHANGE_ID: $(cat fdio-gerrit-vars/gerrit-change-id)"
+        echo "GERRIT_CHANGE_NUMBER: $(cat fdio-gerrit-vars/gerrit-change-number)"
+        echo "GERRIT_CHANGE_URL: $(cat fdio-gerrit-vars/gerrit-change-url)"
+        echo "GERRIT_EVENT_TYPE: $(cat fdio-gerrit-vars/gerrit-event-type)"
+        echo "GERRIT_PATCHSET_NUMBER: $(cat fdio-gerrit-vars/gerrit-patchset-number)"
+        echo "GERRIT_PATCHSET_REVISION: $(cat fdio-gerrit-vars/gerrit-patchset-revision)"
+        echo "GERRIT_PROJECT: $(cat fdio-gerrit-vars/gerrit-project)"
+        echo "GERRIT_REFSPEC: $(cat fdio-gerrit-vars/gerrit-refspec)"
         echo "${{ inputs.TUI_LINE }}"
 
     - name: Upload Workflow Outputs
       uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.ARTIFACT_NAME }}
-        path: vpp-gerrit-vars/
+        path: fdio-gerrit-vars/
         if-no-files-found: error
