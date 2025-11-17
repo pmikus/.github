@@ -24,7 +24,7 @@ inputs:
   s3_path:
     description: "Path within Amazon AWS S3 bucket."
     required: false
-    default: "vex-yul-rot-jenkins-1/${{ github.job }}/${{ github.run_id }}"
+    default: "${{ github.job }}/${{ github.run_id }}"
     type: string
   archives_path:
     description: "Source directory with logs artifact to archive."
@@ -128,7 +128,7 @@ runs:
 
           content_type=$(get_content_type "${file}")
 
-          S3_ARN="s3://${{ inputs.s3_bucket }}/${{ inputs.s3_path }}/${rel_path}.gz"
+          S3_ARN="s3://${{ inputs.s3_bucket }}/vex-yul-rot-jenkins-1/${{ inputs.s3_path }}/${rel_path}.gz"
 
           echo "Uploading ${rel_path}.gz -> ${S3_ARN} (Content-Type: ${content_type}, gzip)"
           aws s3 cp "${tmp_file}" "${S3_ARN}" --content-type "${content_type}" --content-encoding "gzip"
